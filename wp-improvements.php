@@ -10,7 +10,7 @@ Author URI: http://xaviesteve.com/
 
 // Enable or disable improvements here
 $wpimp_settings = array(
-	'dev_helper' 	=> true, // displays useful technical information on pages and posts to aid in developing Wordpress themes and complex setups
+	'dev_helper' 		=> true, // displays useful technical information on pages and posts to aid in developing Wordpress themes and complex setups
 	'seo_wysiwyg' 	=> true, // simplify and optimize the WYSIWYG for SEO purposes and non-technical people
 	'security' 			=> true, // increase security against CLRF and other attacks
 );
