@@ -13,6 +13,7 @@ $wpimp_settings = array(
 	'dev_helper' 		=> true, // displays useful technical information on pages and posts to aid in developing Wordpress themes and complex setups
 	'seo_wysiwyg' 	=> true, // simplify and optimize the WYSIWYG for SEO purposes and non-technical people
 	'security' 			=> true, // increase security against CLRF and other attacks
+	'speed' 				=> true, // improve loading speed of pages, reduce database size and other improvements
 );
 
 
@@ -97,6 +98,9 @@ if ($wpimp_settings['dev_helper']) {
 
 
 
+
+
+
 /**
  * SEO WYSIWYG
  * simplify and optimize the WYSIWYG for SEO purposes and non-technical people
@@ -132,11 +136,22 @@ if ($wpimp_settings['seo_wysiwyg']) {
 
 
 
+
+
+
 /**
  * Security
  * increase security against attacks
  */
 if ($wpimp_settings['security']) {
+	
+	// Disable Meta Generator Wordpress
+	function i_want_no_generators() {
+		return '';
+	}
+	add_filter('the_generator','i_want_no_generators');
+	
+	// Filter bad queries
 	if (
 		strpos($_SERVER['REQUEST_URI'], "eval(") ||
 		strpos($_SERVER['REQUEST_URI'], "base64") ||
@@ -148,6 +163,29 @@ if ($wpimp_settings['security']) {
 		@header("Connection: Close");
 		@exit;
   }
+}
+
+
+
+
+/**
+ * Speed
+ * improve loading speed of pages, reduce database size and other improvements
+ */
+if ($wpimp_settings['speed']) {
+	// Remove RSD link
+	remove_action('wp_head', 'rsd_link');
+	// Remove Windows Live Writer
+	remove_action('wp_head', 'wlwmanifest_link');
+	// Limit post revisions
+	define('WP_POST_REVISIONS', 2); // integer or false for none
+	// Empty WordPress trash once a week
+	define('EMPTY_TRASH_DAYS', 7);
+	// Enable caching
+	//define('ENABLE_CACHE', TRUE);
+	// Specify a cache expiration date
+	//define('CACHE_EXPIRATION_TIME', 3600); // 1 hour
+
 }
 
 
