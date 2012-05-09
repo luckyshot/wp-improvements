@@ -4,7 +4,7 @@ Plugin Name: Wordpress Improvements
 Plugin URI: http://xaviesteve.com/
 Description: Wordpress Improvements is a suite of fixes and optimizations curated and selected by Senior Wordpress developer Xavi Esteve. The plugin includes several improvements for Wordpress such as: displays useful technical information on pages and posts to aid in developing Wordpress themes and complex setups, increase security against CLRF and other attacks, simplify and optimize the WYSIWYG for SEO purposes and non-technical people.
 Author: Xavi Esteve
-Version: 1.2.2
+Version: 1.2.3
 Author URI: http://xaviesteve.com/
 */
 
@@ -22,11 +22,13 @@ $wpimp_settings = array(
  * Displays useful technical information on pages and posts to aid in developing Wordpress themes and complex setups
  */
 if ($wpimp_settings['dev_helper']) {
+	add_filter('show_admin_bar', '__return_false'); // disable annoying Wordpres top bar
+
 	add_action('wp_head', 'wpimp_head');
 	add_action('wp_footer', 'wpimp_footer');
 
 	function wpimp_head() {
-		if (is_user_logged_in()) {
+		if (current_user_can('edit_others_posts')) {
 			echo '
 		<style type="text/css">
 			#adminwidget {background:#fff;font-size:10px;bottom:10px;right:5px;position:fixed;padding:10px;border:1px dashed #ccc;margin:5px;height:1em;overflow:hidden;width:80px;filter:alpha(opacity=30);-moz-opacity:0.3;-khtml-opacity: 0.3;opacity: 0.3;border-radius:10px;text-align:left;}
@@ -45,7 +47,7 @@ if ($wpimp_settings['dev_helper']) {
 	}
 
 	function wpimp_footer() {
-		if ($wpimp_settings['dev_helper'] && is_user_logged_in()) {
+		if (current_user_can('edit_others_posts')) {
 			global $post;
 			
 			$output = "";
