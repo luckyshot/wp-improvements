@@ -84,7 +84,7 @@ if ($wpimp_settings['dev_helper']) {
 		// <a href="'.get_bloginfo('url').'/wp-admin/profile.php">Profile</a>	
 		$output .= '
 			<p>
-				<a href="'.get_bloginfo('url').'/wp-admin/post.php?post='.$post->ID.'&action=edit&message=1">Edit this</a> / 
+				<a href="'.get_bloginfo('url').'/wp-admin/post.php?post='.$post->ID.'&action=edit&">Edit this</a> / 
 				<a href="'.get_bloginfo('url').'/wp-admin/" class="strong">WP admin</a> / 
 				<a href="'.wp_logout_url(wpimp_currenturl()).'">Logout</a>
 			</p>
